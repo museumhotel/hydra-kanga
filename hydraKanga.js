@@ -5,6 +5,9 @@ window.hydraKanga = async () => {
   await loadScript(
     "https://cdn.jsdelivr.net/gh/geikha/hydra-antlia@master/antlia-colors.js",
   ); //geikha's hydra colours library
+  console.log(`hydraKanga.js loaded
+    from: https://github.com/museumhotel/hydra-kanga
+     `);
 
   window.kangaBorderPatternFractalIFS = [
     (x, y, r) => [
