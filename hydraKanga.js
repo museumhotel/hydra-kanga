@@ -1,28 +1,11 @@
 window.hydraKanga = async () => {
   await loadScript(
     "https://cdn.jsdelivr.net/gh/geikha/hyper-hydra@latest/hydra-text.js",
-  ); //text library
+  ); //geikha's hydra text library
   await loadScript(
     "https://cdn.jsdelivr.net/gh/geikha/hydra-antlia@master/antlia-colors.js",
-  ); //colours library
+  ); //geikha's hydra colours library
 
-  initKangaColours = () => {
-    // border colours
-    borderPattBgCol = "black";
-    borderPattFillCol = "white";
-
-    // central frame bg
-    centralBgCol = "white";
-
-    // text box colours
-    txtBorderBgCol = "black";
-    txtBorderBgStroke = "white";
-
-    // text colour assignments
-    txtStrokeStyleCol = "black";
-    txtFillStyleCol = "white";
-  };
-  // initKangaColours()
   window.kangaBorderPatternFractalIFS = [
     (x, y, r) => [
       r < 0.01
@@ -236,8 +219,7 @@ window.hydraKanga = async () => {
     ],
   ];
 
-  // make sure to comment out after first call
-  // initgoldGroundBg(col)
+  //gold ground background
   window.goldGround = (col) => {
     return shape(4, 1, 0).layer(noise(999, 1).invert().luma()).color_(col);
   };
@@ -274,9 +256,6 @@ window.hydraKanga = async () => {
     // borderPatternY = 0;
     return src(s0);
   };
-
-  // initBorderBg = (col) => {};
-  // initBorderPattern();
 
   tileSize = cnvPindo.width / 12;
   borderPatternCnv.width = tileSize;
@@ -368,15 +347,8 @@ window.hydraKanga = async () => {
     ctxTxX = cnvJina.width * (9.6 / 300);
     ctxTxY = cnvJina.height * (7.3 / 150);
     s3.init({ src: cnvJina, dynamic: true });
-    // // txStrokeCol = ctxTx.strokeStyle = `${txtStrokeStyleCol}`
-    // // txFillCol = ctxTx.fillStyle = `${txtFillStyleCol}`
-    // // ctxTxFont = "sans-serif"
-    // ctxTxFont = "cursive";
   };
   initKangaTxt();
-
-  // Hydra update
-  update = () => {};
 
   //Outlined text
   window.kangaTxtStroke = (str, colStroke, txtFont, size) => {
@@ -390,7 +362,6 @@ window.hydraKanga = async () => {
     return srcRelMask(txt).scroll(0, 0.775);
   };
 
-  //"Just JUST jusT"
   //Filled text
   window.kangaTxtFill = (str, colFill, txtFont, size) => {
     txt = createText();
