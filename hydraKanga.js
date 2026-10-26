@@ -379,10 +379,17 @@ window.hydraKanga = async () => {
       }
     }
 
-    // borderPattCtx.clearRect(0, 0, tileSize, tileSize);
     if (borderPatternFrame % 64 === 0) {
+      // borderPattCtx.clearRect(0, 0, tileSize, tileSize);
+      // ctxB.clearRect(0, 0, cnvPindo.width, cnvPindo.height);
+      // ctxB.globalAlpha = 0;
       borderPattCtx.globalAlpha = 1;
     }
+    // ctxB.globalAlpha = 1;
+    // ctxB.globalAlpha = Math.max(
+    //   0.1,
+    //   Math.min(1, 1 - (borderPatternFrame % 128) / 128),
+    // );
     borderPattCtx.globalAlpha = 0.125;
     borderPattCtx.fillStyle = col;
 
