@@ -268,6 +268,7 @@ window.hydraKanga = async () => {
   borderPatternCnv.height = tileSize;
   borderPatternX = 0;
   borderPatternY = 0;
+  borderPatternFrame = 0;
 
   selectFractalIFS = (shapeIndex = 6) => {
     if (shapeIndex === "r") {
@@ -293,6 +294,64 @@ window.hydraKanga = async () => {
     );
   };
 
+  // drawKangaBorderPattern = (
+  //   col,
+  //   shapeIndex = 6,
+  //   dir = "up",
+  //   speed = 1,
+  //   motion = "linear",
+  // ) => {
+  //   const ifs = kangaBorderPatternFractalIFS[selectFractalIFS(shapeIndex)];
+  //   // ctxB.clearRect(0, 0, cnvPindo.width, cnvPindo.height);
+  //   // ctxB.fillStyle = "cyan";
+
+  //   const wave =
+  //     motion === "sine" ? Math.sin(time * speed) * tileSize * 0.25 : 0;
+  //   const wobbleX = ["left", "right"].includes(dir) ? wave : 0;
+  //   const wobbleY = ["up", "down"].includes(dir) ? wave : 0;
+
+  //   //barnsley fern fractal shape generator
+  //   // borderPattCtx.clearRect(0, 0, tileSize, tileSize);
+  //   borderPattCtx.fillStyle = col;
+
+  //   let cX = 0,
+  //     cY = 0;
+  //   const fernPoint = Math.max(0.5, tileSize * 0.01);
+  //   for (let i = 0; i < 1000; i++) {
+  //     [cX, cY] = ifs(cX, cY, Math.random());
+  //     borderPattCtx.fillRect(
+  //       tileSize * (0.5 + cX / 4) + wobbleX,
+  //       tileSize * (0.5 - cY / 4) + wobbleY,
+  //       fernPoint,
+  //       fernPoint,
+  //     );
+  //   }
+  //   //pattern animation config
+  //   const [dx, dy] = getBorderScrollStep(dir);
+  //   let tx = borderPatternX,
+  //     ty = borderPatternY;
+
+  //   // if (motion === "sine") {
+  //   //   const wave = Math.sin(time * speed) * tileSize;
+  //   //   if (dx) tx = wave * dx;
+  //   //   if (dy) ty = wave * dy;
+  //   // } else {
+  //   borderPatternX = (borderPatternX + dx * speed + tileSize) % tileSize;
+  //   borderPatternY = (borderPatternY + dy * speed + tileSize) % tileSize;
+  //   tx = borderPatternX;
+  //   ty = borderPatternY;
+  //   // }
+
+  //   animatedPattern = ctxB.createPattern(borderPatternCnv, "repeat");
+  //   animatedPattern.setTransform(new DOMMatrix().translate(tx, ty));
+
+  //   ctxB.strokeStyle = animatedPattern;
+  //   ctxB.lineWidth = ctxBLW;
+  //   ctxB.strokeRect(ctxBX, ctxBY, ctxBW, ctxBH);
+  //   // borderPatternX = (borderPatternX + dx * speed + tileSize) % tileSize;
+  //   // borderPatternY = (borderPatternY + dy * speed + tileSize) % tileSize;
+  // };
+
   drawKangaBorderPattern = (
     col,
     shapeIndex = 6,
@@ -300,55 +359,59 @@ window.hydraKanga = async () => {
     speed = 1,
     motion = "linear",
   ) => {
+    borderPatternFrame++;
+
     const ifs = kangaBorderPatternFractalIFS[selectFractalIFS(shapeIndex)];
-    ctxB.clearRect(0, 0, cnvPindo.width, cnvPindo.height);
-    // ctxB.fillStyle = "cyan";
+    const [dx, dy] = getBorderScrollStep(dir);
 
-    const wave =
-      motion === "sine" ? Math.sin(time * speed) * tileSize * 0.25 : 0;
-    const wobbleX = ["left", "right"].includes(dir) ? wave : 0;
-    const wobbleY = ["up", "down"].includes(dir) ? wave : 0;
+    let wobbleX = 0;
+    let wobbleY = 0;
 
-    //barnsley fern fractal shape generator
+    if (motion === "sine" || motion === "scrollSine") {
+      const wave = Math.sin(time * speed) * tileSize * 0.25;
+
+      if (dir === "left" || dir === "right") {
+        wobbleX = wave;
+      }
+
+      if (dir === "up" || dir === "down") {
+        wobbleY = wave;
+      }
+    }
+
     // borderPattCtx.clearRect(0, 0, tileSize, tileSize);
+    if (borderPatternFrame % 64 === 0) {
+      borderPattCtx.globalAlpha = 1;
+    }
+    borderPattCtx.globalAlpha = 0.125;
     borderPattCtx.fillStyle = col;
 
-    let cX = 0,
-      cY = 0;
+    let cX = 0;
+    let cY = 0;
     const fernPoint = Math.max(0.5, tileSize * 0.01);
+
     for (let i = 0; i < 1000; i++) {
       [cX, cY] = ifs(cX, cY, Math.random());
-      borderPattCtx.fillRect(
-        tileSize * (0.5 + cX / 4) + wobbleX,
-        tileSize * (0.5 - cY / 4) + wobbleY,
-        fernPoint,
-        fernPoint,
-      );
-    }
-    //pattern animation config
-    const [dx, dy] = getBorderScrollStep(dir);
-    let tx = borderPatternX,
-      ty = borderPatternY;
 
-    // if (motion === "sine") {
-    //   const wave = Math.sin(time * speed) * tileSize;
-    //   if (dx) tx = wave * dx;
-    //   if (dy) ty = wave * dy;
-    // } else {
-    borderPatternX = (borderPatternX + dx * speed + tileSize) % tileSize;
-    borderPatternY = (borderPatternY + dy * speed + tileSize) % tileSize;
-    tx = borderPatternX;
-    ty = borderPatternY;
-    // }
+      const px = tileSize * (0.5 + cX / 4) + wobbleX;
+      const py = tileSize * (0.5 - cY / 4) + wobbleY;
+
+      borderPattCtx.fillRect(px, py, fernPoint, fernPoint);
+    }
+
+    if (motion === "linear" || motion === "scrollSine") {
+      borderPatternX = (borderPatternX + dx * speed + tileSize) % tileSize;
+      borderPatternY = (borderPatternY + dy * speed + tileSize) % tileSize;
+    }
 
     animatedPattern = ctxB.createPattern(borderPatternCnv, "repeat");
-    animatedPattern.setTransform(new DOMMatrix().translate(tx, ty));
+    animatedPattern.setTransform(
+      new DOMMatrix().translate(borderPatternX, borderPatternY),
+    );
 
     ctxB.strokeStyle = animatedPattern;
     ctxB.lineWidth = ctxBLW;
     ctxB.strokeRect(ctxBX, ctxBY, ctxBW, ctxBH);
-    // borderPatternX = (borderPatternX + dx * speed + tileSize) % tileSize;
-    // borderPatternY = (borderPatternY + dy * speed + tileSize) % tileSize;
   };
 
   // initKangaCentral(col)
@@ -453,7 +516,7 @@ window.hydraKanga = async () => {
   };
 
   window.drawLiveBorder = (col = "white") => {
-    ctxB.clearRect(0, 0, tileSize, tileSize);
+    ctxB.clearRect(0, 0, cnvPindo.width, cnvPindo.height);
     setKangaBorderCol(col);
   };
 
