@@ -249,21 +249,24 @@ window.hydraKanga = async () => {
 
   setKangaBorderCol = (col) => {
     // 'frame' for the border, a rectangle with no fill.
-    ctxB.strokeStyle = col;
-    ctxB.strokeRect(ctxBX, ctxBY, ctxBW, ctxBH);
+    // ctxB.strokeStyle = col;
+    // ctxB.fillStyle = col;
+    // cnvPindo.fillStyle = "red";
+    // ctxB.strokeRect(ctxBX, ctxBY, ctxBW, ctxBH);
 
     // internal border pattern definition
-    // borderPattCtx.fillStyle = `${borderPattBgCol}` // effectively background colour for the border
-    borderPattCtx.fillStyle = col; // effectively background colour for the border
+    // borderPattCtx.fillStyle = `${borderPattBgCol}`
+    // borderPattCtx.fillStyle = "";
+    // borderPattCtx.clearRect(0, 0, tileSize, tileSize);
+    borderPattCtx.fillStyle = col;
     borderPattCtx.fillRect(0, 0, tileSize, tileSize);
-    // borderPatternY = 0;
     return src(s0);
   };
 
   tileSize = cnvPindo.width / 12;
   borderPatternCnv.width = tileSize;
   borderPatternCnv.height = tileSize;
-  // borderPattCtx.fillRect(0, 0, tileSize, tileSize);
+  borderPatternX = 0;
   borderPatternY = 0;
 
   selectFractalIFS = (shapeIndex = 6) => {
@@ -276,34 +279,76 @@ window.hydraKanga = async () => {
     );
   };
 
-  drawKangaBorderPattern = (col, shapeIndex = 6) => {
+  getBorderScrollStep = (dir = "up") => {
+    if (dir === "r")
+      dir = ["up", "down", "left", "right"][Math.floor(Math.random() * 4)];
+
+    return (
+      {
+        up: [0, -1],
+        down: [0, 1],
+        left: [-1, 0],
+        right: [1, 0],
+      }[dir] || [0, -1]
+    );
+  };
+
+  drawKangaBorderPattern = (
+    col,
+    shapeIndex = 6,
+    dir = "up",
+    speed = 1,
+    motion = "linear",
+  ) => {
     const ifs = kangaBorderPatternFractalIFS[selectFractalIFS(shapeIndex)];
     ctxB.clearRect(0, 0, cnvPindo.width, cnvPindo.height);
-    // borderPattCtx.clearRect(0, 0, tileSize, tileSize);
+    // ctxB.fillStyle = "cyan";
+
+    const wave =
+      motion === "sine" ? Math.sin(time * speed) * tileSize * 0.25 : 0;
+    const wobbleX = ["left", "right"].includes(dir) ? wave : 0;
+    const wobbleY = ["up", "down"].includes(dir) ? wave : 0;
 
     //barnsley fern fractal shape generator
-    // borderPattCtx.fillStyle = `${borderPattFillCol}`
-
+    // borderPattCtx.clearRect(0, 0, tileSize, tileSize);
     borderPattCtx.fillStyle = col;
+
     let cX = 0,
       cY = 0;
     const fernPoint = Math.max(0.5, tileSize * 0.01);
-    for (let i = 0; i < 10; i++) {
-      [cX, cY] = ifs(cX, cY, Math.random(1));
+    for (let i = 0; i < 1000; i++) {
+      [cX, cY] = ifs(cX, cY, Math.random());
       borderPattCtx.fillRect(
-        tileSize * (0.5 + cX / 4),
-        tileSize * (0.5 - cY / 4),
+        tileSize * (0.5 + cX / 4) + wobbleX,
+        tileSize * (0.5 - cY / 4) + wobbleY,
         fernPoint,
         fernPoint,
       );
     }
     //pattern animation config
+    const [dx, dy] = getBorderScrollStep(dir);
+    let tx = borderPatternX,
+      ty = borderPatternY;
+
+    // if (motion === "sine") {
+    //   const wave = Math.sin(time * speed) * tileSize;
+    //   if (dx) tx = wave * dx;
+    //   if (dy) ty = wave * dy;
+    // } else {
+    borderPatternX = (borderPatternX + dx * speed + tileSize) % tileSize;
+    borderPatternY = (borderPatternY + dy * speed + tileSize) % tileSize;
+    tx = borderPatternX;
+    ty = borderPatternY;
+    // }
+
     animatedPattern = ctxB.createPattern(borderPatternCnv, "repeat");
-    animatedPattern.setTransform(new DOMMatrix().translate(0, borderPatternY));
+    animatedPattern.setTransform(new DOMMatrix().translate(tx, ty));
+
     ctxB.strokeStyle = animatedPattern;
     ctxB.lineWidth = ctxBLW;
     ctxB.strokeRect(ctxBX, ctxBY, ctxBW, ctxBH);
-    borderPatternY = (borderPatternY - 1 + tileSize) % tileSize;
+    // borderPatternX = (borderPatternX + dx * speed + tileSize) % tileSize;
+    // borderPatternY = (borderPatternY + dy * speed + tileSize) % tileSize;
   };
 
   // initKangaCentral(col)
@@ -403,10 +448,15 @@ window.hydraKanga = async () => {
     return srcRelMask(txt).scroll(0, 0.775);
   };
 
-  window.liveBorder = (col = "white") => {
-    setKangaBorderCol(col);
+  window.liveBorder = () => {
     return src(s0);
   };
+
+  window.drawLiveBorder = (col = "white") => {
+    ctxB.clearRect(0, 0, tileSize, tileSize);
+    setKangaBorderCol(col);
+  };
+
   window.kangaCentralPanel = (col = "navy") => {
     ctxC.fillStyle = col;
     ctxC.fillRect(ctxCX, ctxCY, ctxCW, ctxCH);
