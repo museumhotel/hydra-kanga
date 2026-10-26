@@ -1,3 +1,216 @@
+window.kangaBorderPatternFractalIFS = [
+  (x, y, r) => [
+    r < 0.01
+      ? 1
+      : r < 0.86
+        ? 0.85 * x - 0.02 * y - 1
+        : r < 0.93
+          ? -0.5 * x + 0.15 * y
+          : -0.5 * x + 0.3 * y - 1,
+    r < 0.01
+      ? -0.55
+      : r < 0.86
+        ? 0.09 * x + 0.85 * y - 0.2
+        : r < 0.93
+          ? 0.3 * x - 0.1 * y - 0.2
+          : 0.5 * x + 0.55 * y - 0.25,
+  ],
+  (x, y, r) => [
+    //old 2
+    r < 0.01
+      ? 1
+      : r < 0.86
+        ? -0.75 * x + 0.5 * y - 0.5
+        : r < 0.93
+          ? -0.55 * x + 0.25 * y
+          : 1.5 * x + 0.7 * y - 1,
+    r < 0.01
+      ? -0.55
+      : r < 0.86
+        ? 0.2 * x + 0.75 * y - 0.15
+        : r < 0.93
+          ? 0.5 * x - 0.1 * y + 0.5
+          : -0.5 * x + 0.55 * y - 0.25,
+  ],
+  (x, y, r) => [
+    //new 3
+    r < 0.01
+      ? 0.5
+      : r < 0.86
+        ? 0.15 * x + -0.5 * y - 0.05
+        : r < 0.93
+          ? 0.25 * x + -0.99 * y
+          : 0.5 * x + -1.7 * y - 1,
+    r < 0.3
+      ? 0.83
+      : r < 0.45
+        ? 0.7 * x + -0.2 * y - -0.95
+        : r < 0.5
+          ? 0.1 * x - 0.75 * y + 0.9
+          : 0.2 * x + -0.55 * y - 0.25,
+  ],
+  (x, y, r) => [
+    r < 0.01
+      ? 1
+      : r < 0.86
+        ? 0.85 * x - 0.02 * y - 1
+        : r < 0.93
+          ? -0.75 * x - 0.55 * y
+          : -0.15 * x + 0.05 * y + 2.5,
+    r < 0.01
+      ? -0.14
+      : r < 0.86
+        ? -0.2 * x + 0.85 * y - 0.5
+        : r < 0.93
+          ? 0.5 * x - 0.05 * y + 0.2
+          : 0.75 * x - 0.5 * y - 0.25,
+  ],
+  (x, y, r) => [
+    r < 0.02
+      ? 0
+      : r < 0.84
+        ? -0.85 * x + 0.5 * y
+        : r < 0.93
+          ? -0.5 * x + 0.5 * y - 1.5
+          : 0.25 * x - 0.1 * y - 0.5,
+    r < 0.02
+      ? 0.05 * y
+      : r < 0.84
+        ? -0.15 * x + 0.9 * y + 0.5
+        : r < 0.93
+          ? 0.15 * x + 0.15 * y + 2.5
+          : -1.5 * x - 0.55 * y + 0.25,
+  ],
+  (x, y, r) => [
+    r < 0.01
+      ? 0
+      : r < 0.85
+        ? 0.845 * x + 0.035 * y
+        : r < 0.93
+          ? 0.2 * x - 0.31 * y
+          : -0.15 * x + 0.24 * y,
+    r < 0.01
+      ? -0.1 * y - 0.55
+      : r < 0.85
+        ? -0.035 * x + 0.82 * y + 1.6
+        : r < 0.93
+          ? 0.255 * x + 0.245 * y + 0.29
+          : 0.25 * x + 0.2 * y + 0.68,
+  ],
+  (x, y, r) => [
+    r < 0.02
+      ? 0.5
+      : r < 0.84
+        ? 0.95 * x + 0.05 * y
+        : r < 0.9
+          ? -0.5 * x - 0.35 * y + 1
+          : 0.5 * x + 0.3 * y - 1,
+    r < 0.02
+      ? -0.14
+      : r < 0.84
+        ? -0.25 * x + 0.75 * y - 0.1
+        : r < 0.9
+          ? 0.3 * x - 0.1 * y + 0.2
+          : 0.3 * x + 0.25 * y + 0.25,
+  ],
+  (x, y, r) => [
+    r < 0.01
+      ? -0.49 * x + 0.101 * y + 0.9
+      : r < 0.86
+        ? 0.1 * x + 0.45 * y + 0.95
+        : r < 0.93
+          ? -0.41 * x + 0.091 * y + 0.15
+          : -0.95 * x + 0.02 * y + 0.19,
+    r < 0.01
+      ? 0.9
+      : r < 0.86
+        ? 0.652 * x + 0.279 * y + 0.1
+        : r < 0.93
+          ? 0.85 * x + 0.5 * y + 0.049
+          : 0.09 * x + 0.19 * y + 0.08,
+  ],
+  (x, y, r) => [
+    r < 0.01
+      ? 0.9
+      : r < 0.85
+        ? 0.845 * x + 0.5 * y
+        : r < 0.93
+          ? 0.2 * x - 0.31 * y
+          : -0.915 * x + 0.24 * y,
+    r < 0.01
+      ? 0.1 * y - 0.955
+      : r < 0.85
+        ? -0.5 * x + 0.82 * y + 0.6
+        : r < 0.93
+          ? 0.9255 * x + 0.245 * y + 0.9
+          : 0.25 * x + 0.2 * y + 0.68,
+  ],
+  (x, y, r) => [
+    r < 0.01
+      ? 0.1
+      : r < 0.86
+        ? 0.85 * x - 0.02 * y - 0.2
+        : r < 0.93
+          ? -0.5 * x + 0.15 * y
+          : -0.95 * x + 0.3 * y - 0.1,
+    r < 0.01
+      ? -0.55
+      : r < 0.86
+        ? 0.09 * x + 0.85 * y - 0.52
+        : r < 0.93
+          ? 0.3 * x - 0.1 * y + 0.092
+          : 0.5 * x + 0.55 * y - 0.925,
+  ],
+  (x, y, r) => [
+    r < 0.01
+      ? 0.1
+      : r < 0.86
+        ? 0.85 * x - 0.02 * y - 0.2
+        : r < 0.93
+          ? -0.5 * x + 0.15 * y
+          : -0.5 * x + 0.3 * y - 0.1,
+    r < 0.01
+      ? -0.55
+      : r < 0.86
+        ? 0.09 * x + 0.85 * y - 0.52
+        : r < 0.93
+          ? 0.3 * x - 0.1 * y + 0.92
+          : 0.5 * x + 0.55 * y - 0.25,
+  ],
+  (x, y, r) => [
+    r < 0.01
+      ? 0.9
+      : r < 0.85
+        ? 0.845 * x + 0.5 * y
+        : r < 0.93
+          ? 0.2 * x - 0.31 * y
+          : -0.15 * x + 0.24 * y,
+    r < 0.01
+      ? 0.1 * y - 0.955
+      : r < 0.85
+        ? -0.5 * x + 0.82 * y + 0.6
+        : r < 0.93
+          ? 0.255 * x + 0.245 * y + 0.29
+          : 0.25 * x + 0.2 * y + 0.68,
+  ],
+  (x, y, r) => [
+    r < 0.01
+      ? 0.9
+      : r < 0.85
+        ? 0.845 * x + 0.5 * y
+        : r < 0.93
+          ? 0.2 * x - 0.31 * y
+          : -0.915 * x + 0.24 * y,
+    r < 0.01
+      ? 0.1 * y - 0.955
+      : r < 0.85
+        ? -0.5 * x + 0.82 * y + 0.6
+        : r < 0.93
+          ? 0.9255 * x + 0.245 * y + 0.9
+          : 0.25 * x + 0.92 * y + 0.8,
+  ],
+];
+
 window.hydraKanga = async () => {
   await loadScript(
     "https://cdn.jsdelivr.net/gh/geikha/hyper-hydra@latest/hydra-text.js",
@@ -8,219 +221,6 @@ window.hydraKanga = async () => {
   console.log(`hydraKanga.js loaded
     from: https://github.com/museumhotel/hydra-kanga
      `);
-
-  window.kangaBorderPatternFractalIFS = [
-    (x, y, r) => [
-      r < 0.01
-        ? 1
-        : r < 0.86
-          ? 0.85 * x - 0.02 * y - 1
-          : r < 0.93
-            ? -0.5 * x + 0.15 * y
-            : -0.5 * x + 0.3 * y - 1,
-      r < 0.01
-        ? -0.55
-        : r < 0.86
-          ? 0.09 * x + 0.85 * y - 0.2
-          : r < 0.93
-            ? 0.3 * x - 0.1 * y - 0.2
-            : 0.5 * x + 0.55 * y - 0.25,
-    ],
-    (x, y, r) => [
-      //old 2
-      r < 0.01
-        ? 1
-        : r < 0.86
-          ? -0.75 * x + 0.5 * y - 0.5
-          : r < 0.93
-            ? -0.55 * x + 0.25 * y
-            : 1.5 * x + 0.7 * y - 1,
-      r < 0.01
-        ? -0.55
-        : r < 0.86
-          ? 0.2 * x + 0.75 * y - 0.15
-          : r < 0.93
-            ? 0.5 * x - 0.1 * y + 0.5
-            : -0.5 * x + 0.55 * y - 0.25,
-    ],
-    (x, y, r) => [
-      //new 3
-      r < 0.01
-        ? 0.5
-        : r < 0.86
-          ? 0.15 * x + -0.5 * y - 0.05
-          : r < 0.93
-            ? 0.25 * x + -0.99 * y
-            : 0.5 * x + -1.7 * y - 1,
-      r < 0.5
-        ? 0.83
-        : r < 0.45
-          ? 0.7 * x + -0.2 * y - -0.95
-          : r < 0.3
-            ? 0.1 * x - 0.75 * y + 0.9
-            : 0.2 * x + -0.55 * y - 0.25,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? 1
-        : r < 0.86
-          ? 0.85 * x - 0.02 * y - 1
-          : r < 0.93
-            ? -0.75 * x - 0.55 * y
-            : -0.15 * x + 0.05 * y + 2.5,
-      r < 0.01
-        ? -0.14
-        : r < 0.86
-          ? -0.2 * x + 0.85 * y - 0.5
-          : r < 0.93
-            ? 0.5 * x - 0.05 * y + 0.2
-            : 0.75 * x - 0.5 * y - 0.25,
-    ],
-    (x, y, r) => [
-      r < 0.02
-        ? 0
-        : r < 0.84
-          ? -0.85 * x + 0.5 * y
-          : r < 0.93
-            ? -0.5 * x + 0.5 * y - 1.5
-            : 0.25 * x - 0.1 * y - 0.5,
-      r < 0.02
-        ? 0.05 * y
-        : r < 0.84
-          ? -0.15 * x + 0.9 * y + 0.5
-          : r < 0.93
-            ? 0.15 * x + 0.15 * y + 2.5
-            : -1.5 * x - 0.55 * y + 0.25,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? 0
-        : r < 0.85
-          ? 0.845 * x + 0.035 * y
-          : r < 0.93
-            ? 0.2 * x - 0.31 * y
-            : -0.15 * x + 0.24 * y,
-      r < 0.01
-        ? -0.1 * y - 0.55
-        : r < 0.85
-          ? -0.035 * x + 0.82 * y + 1.6
-          : r < 0.93
-            ? 0.255 * x + 0.245 * y + 0.29
-            : 0.25 * x + 0.2 * y + 0.68,
-    ],
-    (x, y, r) => [
-      r < 0.02
-        ? 0.5
-        : r < 0.84
-          ? 0.95 * x + 0.05 * y
-          : r < 0.9
-            ? -0.5 * x - 0.35 * y + 1
-            : 0.5 * x + 0.3 * y - 1,
-      r < 0.02
-        ? -0.14
-        : r < 0.84
-          ? -0.25 * x + 0.75 * y - 0.1
-          : r < 0.9
-            ? 0.3 * x - 0.1 * y + 0.2
-            : 0.3 * x + 0.25 * y + 0.25,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? -0.49 * x + 0.101 * y + 0.9
-        : r < 0.86
-          ? 0.1 * x + 0.45 * y + 0.95
-          : r < 0.93
-            ? -0.41 * x + 0.091 * y + 0.15
-            : -0.95 * x + 0.02 * y + 0.19,
-      r < 0.01
-        ? 0.9
-        : r < 0.86
-          ? 0.652 * x + 0.279 * y + 0.1
-          : r < 0.93
-            ? 0.85 * x + 0.5 * y + 0.049
-            : 0.09 * x + 0.19 * y + 0.08,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? 0.9
-        : r < 0.85
-          ? 0.845 * x + 0.5 * y
-          : r < 0.93
-            ? 0.2 * x - 0.31 * y
-            : -0.915 * x + 0.24 * y,
-      r < 0.01
-        ? 0.1 * y - 0.955
-        : r < 0.85
-          ? -0.5 * x + 0.82 * y + 0.6
-          : r < 0.93
-            ? 0.9255 * x + 0.245 * y + 0.9
-            : 0.25 * x + 0.2 * y + 0.68,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? 0.1
-        : r < 0.86
-          ? 0.85 * x - 0.02 * y - 0.2
-          : r < 0.93
-            ? -0.5 * x + 0.15 * y
-            : -0.95 * x + 0.3 * y - 0.1,
-      r < 0.01
-        ? -0.55
-        : r < 0.86
-          ? 0.09 * x + 0.85 * y - 0.52
-          : r < 0.93
-            ? 0.3 * x - 0.1 * y + 0.092
-            : 0.5 * x + 0.55 * y - 0.925,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? 0.1
-        : r < 0.86
-          ? 0.85 * x - 0.02 * y - 0.2
-          : r < 0.93
-            ? -0.5 * x + 0.15 * y
-            : -0.5 * x + 0.3 * y - 0.1,
-      r < 0.01
-        ? -0.55
-        : r < 0.86
-          ? 0.09 * x + 0.85 * y - 0.52
-          : r < 0.93
-            ? 0.3 * x - 0.1 * y + 0.92
-            : 0.5 * x + 0.55 * y - 0.25,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? 0.9
-        : r < 0.85
-          ? 0.845 * x + 0.5 * y
-          : r < 0.93
-            ? 0.2 * x - 0.31 * y
-            : -0.15 * x + 0.24 * y,
-      r < 0.01
-        ? 0.1 * y - 0.955
-        : r < 0.85
-          ? -0.5 * x + 0.82 * y + 0.6
-          : r < 0.93
-            ? 0.255 * x + 0.245 * y + 0.29
-            : 0.25 * x + 0.2 * y + 0.68,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? 0.9
-        : r < 0.85
-          ? 0.845 * x + 0.5 * y
-          : r < 0.93
-            ? 0.2 * x - 0.31 * y
-            : -0.915 * x + 0.24 * y,
-      r < 0.01
-        ? 0.1 * y - 0.955
-        : r < 0.85
-          ? -0.5 * x + 0.82 * y + 0.6
-          : r < 0.93
-            ? 0.9255 * x + 0.245 * y + 0.9
-            : 0.25 * x + 0.92 * y + 0.8,
-    ],
-  ];
 
   //gold ground background
   window.goldGround = (col) => {
@@ -248,16 +248,6 @@ window.hydraKanga = async () => {
   initKangaBorder();
 
   setKangaBorderCol = (col) => {
-    // 'frame' for the border, a rectangle with no fill.
-    // ctxB.strokeStyle = col;
-    // ctxB.fillStyle = col;
-    // cnvPindo.fillStyle = "red";
-    // ctxB.strokeRect(ctxBX, ctxBY, ctxBW, ctxBH);
-
-    // internal border pattern definition
-    // borderPattCtx.fillStyle = `${borderPattBgCol}`
-    // borderPattCtx.fillStyle = "";
-    // borderPattCtx.clearRect(0, 0, tileSize, tileSize);
     borderPattCtx.fillStyle = col;
     borderPattCtx.fillRect(0, 0, tileSize, tileSize);
     return src(s0);
@@ -294,64 +284,6 @@ window.hydraKanga = async () => {
     );
   };
 
-  // drawKangaBorderPattern = (
-  //   col,
-  //   shapeIndex = 6,
-  //   dir = "up",
-  //   speed = 1,
-  //   motion = "linear",
-  // ) => {
-  //   const ifs = kangaBorderPatternFractalIFS[selectFractalIFS(shapeIndex)];
-  //   // ctxB.clearRect(0, 0, cnvPindo.width, cnvPindo.height);
-  //   // ctxB.fillStyle = "cyan";
-
-  //   const wave =
-  //     motion === "sine" ? Math.sin(time * speed) * tileSize * 0.25 : 0;
-  //   const wobbleX = ["left", "right"].includes(dir) ? wave : 0;
-  //   const wobbleY = ["up", "down"].includes(dir) ? wave : 0;
-
-  //   //barnsley fern fractal shape generator
-  //   // borderPattCtx.clearRect(0, 0, tileSize, tileSize);
-  //   borderPattCtx.fillStyle = col;
-
-  //   let cX = 0,
-  //     cY = 0;
-  //   const fernPoint = Math.max(0.5, tileSize * 0.01);
-  //   for (let i = 0; i < 1000; i++) {
-  //     [cX, cY] = ifs(cX, cY, Math.random());
-  //     borderPattCtx.fillRect(
-  //       tileSize * (0.5 + cX / 4) + wobbleX,
-  //       tileSize * (0.5 - cY / 4) + wobbleY,
-  //       fernPoint,
-  //       fernPoint,
-  //     );
-  //   }
-  //   //pattern animation config
-  //   const [dx, dy] = getBorderScrollStep(dir);
-  //   let tx = borderPatternX,
-  //     ty = borderPatternY;
-
-  //   // if (motion === "sine") {
-  //   //   const wave = Math.sin(time * speed) * tileSize;
-  //   //   if (dx) tx = wave * dx;
-  //   //   if (dy) ty = wave * dy;
-  //   // } else {
-  //   borderPatternX = (borderPatternX + dx * speed + tileSize) % tileSize;
-  //   borderPatternY = (borderPatternY + dy * speed + tileSize) % tileSize;
-  //   tx = borderPatternX;
-  //   ty = borderPatternY;
-  //   // }
-
-  //   animatedPattern = ctxB.createPattern(borderPatternCnv, "repeat");
-  //   animatedPattern.setTransform(new DOMMatrix().translate(tx, ty));
-
-  //   ctxB.strokeStyle = animatedPattern;
-  //   ctxB.lineWidth = ctxBLW;
-  //   ctxB.strokeRect(ctxBX, ctxBY, ctxBW, ctxBH);
-  //   // borderPatternX = (borderPatternX + dx * speed + tileSize) % tileSize;
-  //   // borderPatternY = (borderPatternY + dy * speed + tileSize) % tileSize;
-  // };
-
   drawKangaBorderPattern = (
     col,
     shapeIndex = 6,
@@ -380,16 +312,9 @@ window.hydraKanga = async () => {
     }
 
     if (borderPatternFrame % 64 === 0) {
-      // borderPattCtx.clearRect(0, 0, tileSize, tileSize);
-      // ctxB.clearRect(0, 0, cnvPindo.width, cnvPindo.height);
-      // ctxB.globalAlpha = 0;
       borderPattCtx.globalAlpha = 1;
     }
-    // ctxB.globalAlpha = 1;
-    // ctxB.globalAlpha = Math.max(
-    //   0.1,
-    //   Math.min(1, 1 - (borderPatternFrame % 128) / 128),
-    // );
+
     borderPattCtx.globalAlpha = 0.125;
     borderPattCtx.fillStyle = col;
 
@@ -397,7 +322,7 @@ window.hydraKanga = async () => {
     let cY = 0;
     const fernPoint = Math.max(0.5, tileSize * 0.01);
 
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 5000; i++) {
       [cX, cY] = ifs(cX, cY, Math.random());
 
       const px = tileSize * (0.5 + cX / 4) + wobbleX;
@@ -546,46 +471,4 @@ window.hydraKanga = async () => {
     );
     return src(s2);
   };
-
-  //gold ground background
-  // goldGround(beige)
-  // osc(5)
-  // .layer(
-  // voronoi(1).color_(white).mask(src(s0).modulate(voronoi(1)))
-  //border
-  //   src(s0).modulatePixelate(noise(5),100,100)
-  // setKangaBorderCol("white")
-  //drawBorderPattern(col)
-  // initBorderBg("lavender")
-  // .modulate(voronoi(1)) //.modulate(osc(50)))
-
-  //central motif
-  // layer(
-  //   src(s1)
-  //     //          .mask(osc([10,999,20,.1,99],.1).colorama(.001).layer(src(s0).sub(shape(4).modulatePixelate(voronoi(1,5),2,5).modulateScale(noise(.1),[99,.75]))))
-  //     .layer(
-  //       osc(50)
-  //         .modulate(src(s0))
-  //         .add(src(s1).sub(noise(5).color_(white))),
-  //     ),
-  // )
-  //   //         ).layer(solid(1,1,1).add(src(s1).sub(noise(5).color_(white))))
-  //   //.modulate(osc(5)))
-  //   //Text Border
-  //   //   .layer(src(s2).mult(voronoi(10).modulate(src(s0))))
-  //   .layer(src(s2).mult(voronoi(10).modulate(src(s0))))
-  //   //text
-  //   .layer(
-  //     src(s3)
-  //       //            .layer(kangaTxtStrokeFill("JUST JUSt just").scroll(0,-.09)
-  //       //            .layer(kangaTxtStrokeFill("The quick brown fox jumped over the lazy sheep dog").scroll(0,-.09)
-  //       .modulateScrollX(osc([2, -5, 1]), [-0.5, 0.1, 0.5, -1])
-  //       .modulate(src(s0)),
-  //   )
-  //   // ,
-  //   //.modulate(noise(1)))
-  //   // )
-  //   // )
-  //   .out();
-  //.modulateHue(osc().kaleid(0))
 };
