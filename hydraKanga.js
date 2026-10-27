@@ -260,6 +260,60 @@ window.hydraKanga = async () => {
   borderPatternY = 0;
   borderPatternFrame = 0;
 
+  fernObjCnv = document.createElement("canvas");
+  fernObjCtx = fernObjCnv.getContext("2d");
+
+  currentFernCacheKey = "";
+
+  renderStaticFernObject = (
+    col = "white",
+    shapeIndex = 6,
+    fernScale = 0.7,
+    pointCount = 5000,
+  ) => {
+    const ifsIndex = selectFractalIFS(shapeIndex);
+    const cacheKey = `${col}-${ifsIndex}-${tileSize}-${fernScale}-${pointCount}`;
+
+    if (currentFernCacheKey === cacheKey) {
+      return;
+    }
+
+    currentFernCacheKey = cacheKey;
+
+    const objectSize = tileSize;
+    fernObjCnv.width = objectSize;
+    fernObjCnv.height = objectSize;
+
+    fernObjCtx.clearRect(0, 0, fernObjCnv.width, fernObjCnv.height);
+    fernObjCtx.fillStyle = col;
+    fernObjCtx.globalAlpha = 1;
+
+    const ifs = kangaBorderPatternFractalIFS[ifsIndex];
+
+    let cX = 0;
+    let cY = 0;
+
+    const fernPoint = Math.max(0.5, tileSize * 0.012);
+
+    //Smaller = larger fern / Larger = smaller fern
+    const coordinateScale = 4 / fernScale;
+
+    for (let i = 0; i < pointCount; i++) {
+      [cX, cY] = ifs(cX, cY, Math.random());
+
+      const px = objectSize * (0.5 + cX / coordinateScale);
+      const py = objectSize * (0.5 - cY / coordinateScale);
+
+      // fernObjCtx.globalAlpha = 0.1;
+
+      // if (borderPatternFrame % 64 === 0) {
+      //   borderPattCtx.globalAlpha = 1;
+      // }
+
+      fernObjCtx.fillRect(px, py, fernPoint, fernPoint);
+    }
+  };
+
   selectFractalIFS = (shapeIndex = 6) => {
     if (shapeIndex === "r") {
       return Math.floor(Math.random() * kangaBorderPatternFractalIFS.length);
@@ -290,18 +344,34 @@ window.hydraKanga = async () => {
     dir = "up",
     speed = 1,
     motion = "linear",
+    opts = {},
   ) => {
+    const {
+      bgCol = "transparent",
+      fernScale = 1.0,
+      fernObjectSize = 0.7,
+      amplitude = 0.18,
+      debugTile = false,
+      debugTileCol = "rgba(255, 0, 0, 1)",
+      scrollTiles = true,
+      fadeMode = "clear",
+      pointCount = 10000,
+    } = opts;
+
     borderPatternFrame++;
 
-    const ifs = kangaBorderPatternFractalIFS[selectFractalIFS(shapeIndex)];
+    renderStaticFernObject(col, shapeIndex, fernScale, pointCount);
+
+    // const ifs = kangaBorderPatternFractalIFS[selectFractalIFS(shapeIndex)];
+
     const [dx, dy] = getBorderScrollStep(dir);
 
     let wobbleX = 0;
     let wobbleY = 0;
 
-    if (motion === "sine" || motion === "scrollSine") {
-      const wave = Math.sin(time * speed) * tileSize * 0.25;
+    const wave = Math.sin(time * speed) * tileSize * amplitude;
 
+    if (motion === "sine" || motion === "scrollSine") {
       if (dir === "left" || dir === "right") {
         wobbleX = wave;
       }
@@ -311,27 +381,75 @@ window.hydraKanga = async () => {
       }
     }
 
-    if (borderPatternFrame % 64 === 0) {
-      borderPattCtx.globalAlpha = 1;
+    if (motion === "circle") {
+      wobbleX = Math.cos(time * speed) * tileSize * amplitude;
+      wobbleY = Math.sin(time * speed) * tileSize * amplitude;
     }
 
-    borderPattCtx.globalAlpha = 0.125;
-    borderPattCtx.fillStyle = col;
-
-    let cX = 0;
-    let cY = 0;
-    const fernPoint = Math.max(0.5, tileSize * 0.01);
-
-    for (let i = 0; i < 5000; i++) {
-      [cX, cY] = ifs(cX, cY, Math.random());
-
-      const px = tileSize * (0.5 + cX / 4) + wobbleX;
-      const py = tileSize * (0.5 - cY / 4) + wobbleY;
-
-      borderPattCtx.fillRect(px, py, fernPoint, fernPoint);
+    if (motion === "orbit") {
+      wobbleX = Math.cos(time * speed) * tileSize * amplitude;
+      wobbleY = Math.sin(time * speed * 1.618) * tileSize * amplitude;
     }
 
-    if (motion === "linear" || motion === "scrollSine") {
+    if (fadeMode === "clear") {
+      borderPattCtx.clearRect(0, 0, tileSize, tileSize);
+    }
+
+    if (fadeMode === "trail") {
+      // borderPattCtx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      borderPattCtx.globalAlpha = 0.075;
+      borderPattCtx.fillStyle = bgCol;
+      borderPattCtx.fillRect(0, 0, tileSize, tileSize);
+    }
+
+    if (bgCol !== "transparent") {
+      borderPattCtx.fillStyle = bgCol;
+      borderPattCtx.fillRect(0, 0, tileSize, tileSize);
+    }
+
+    const drawSize = tileSize * fernObjectSize;
+    const baseX = (tileSize - drawSize) * 0.5;
+    const baseY = (tileSize - drawSize) * 0.5;
+
+    // borderPattCtx.globalAlpha = 0.125;
+    // borderPattCtx.fillStyle = col;
+
+    // let cX = 0;
+    // let cY = 0;
+    // const fernPoint = Math.max(0.5, tileSize * 0.01);
+
+    // for (let i = 0; i < 5000; i++) {
+    //   // [cX, cY] = ifs(cX, cY, Math.random());
+    //   // const px = tileSize * (0.5 + cX / 4) + wobbleX;
+    //   // const py = tileSize * (0.5 - cY / 4) + wobbleY;
+    //   // borderPattCtx.fillRect(px, py, fernPoint, fernPoint);
+    // }
+
+    // borderPattCtx.globalAlpha = 0.125;
+    borderPattCtx.globalAlpha = 1;
+    borderPattCtx.drawImage(
+      fernObjCnv,
+      baseX + wobbleX,
+      baseY + wobbleY,
+      drawSize,
+      drawSize,
+    );
+
+    if (debugTile) {
+      borderPattCtx.save();
+      borderPattCtx.strokeStyle = debugTileCol;
+      borderPattCtx.lineWidth = 1;
+      borderPattCtx.strokeRect(0.5, 0.5, tileSize - 1, tileSize - 1);
+      borderPattCtx.restore();
+    }
+
+    if (
+      scrollTiles &&
+      (motion === "linear" ||
+        motion === "scrollSine" ||
+        motion === "orbit" ||
+        motion === "circle")
+    ) {
       borderPatternX = (borderPatternX + dx * speed + tileSize) % tileSize;
       borderPatternY = (borderPatternY + dy * speed + tileSize) % tileSize;
     }
