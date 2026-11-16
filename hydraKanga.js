@@ -1,3 +1,607 @@
+//  IFS FERN STRUCTURE
+{
+  /*   
+    Every rule has two formulas:
+
+    x: { a, b, e }
+    y: { c, d, f }
+    Together they form:
+
+    nextX = a * x + b * y + e
+    nextY = c * x + d * y + f
+    The values do different visual jobs:
+
+    a and d mostly scale/stretch the form in x/y.
+
+    b and c mix x and y, which creates rotation/shear.
+
+    e moves the point horizontally.
+
+    f moves the point vertically.
+
+    limit controls how often that transformation gets used, depending on its order.
+
+    So a rule like:
+
+    {
+      limit: 0.85,
+      x: { a: 0.845, b: 0.035, e: 0 },
+      y: { c: -0.035, d: 0.82, f: 1.6 },
+    }
+    usually creates a repeated rising/contracting structure, because:
+
+    a and d are less than 1, so the point cloud contracts,
+    b and c add slight twist/shear,
+    f: 1.6 pushes points upward.
+    
+    A rule like:
+
+    {
+      limit: Infinity,
+      x: { a: -0.15, b: 0.24, e: 0 },
+      y: { c: 0.25, d: 0.2, f: 0.68 },
+    }
+    usually creates a rarer branch/side structure, because it only runs after previous thresholds fail.
+
+    smaller threshold rule => stem or special structural mark
+
+    larger threshold rule => main repeated body/frond
+
+    medium threshold rules => side leaflets or branching structures
+  */
+}
+
+window.kangaBorderPatternFractalIFS = [
+  {
+    name: "ifs-fern-01-(horizon-palms)",
+    optimals: {
+      amplitude: 0.25,
+      fernScale: 0.5,
+      fernObjectSize: 1,
+      pointCount: 1000,
+    },
+    rules: [
+      {
+        limit: 0.01,
+        x: { a: 0, b: 0, e: 1 },
+        y: { c: 0, d: 0, f: -0.14 },
+      },
+      {
+        limit: 0.85,
+        x: { a: 0.85, b: 0.02, e: -0.51 },
+        y: { c: -0.2, d: 0.85, f: -0.5 },
+      },
+      {
+        limit: 0.93,
+        x: { a: 0.5, b: 0.15, e: 0 },
+        y: { c: 0.5, d: -0.05, f: 0.2 },
+      },
+      {
+        limit: Infinity,
+        x: { a: -0.95, b: 0.3, e: -1 },
+        y: { c: 0.75, d: -0.5, f: -0.25 },
+      },
+    ],
+  },
+
+  {
+    name: "ifs-fern-02-(carapace-tent)",
+    optimals: {
+      amplitude: 0.25,
+      fernScale: 1,
+      fernObjectSize: 1,
+      pointCount: 1000,
+    },
+    rules: [
+      {
+        limit: 0.1,
+        x: { a: -0.1, b: 0.2, e: 0.75 },
+        y: { c: 0.3, d: -0.4, f: -1.55 },
+      },
+      {
+        limit: 0.86,
+        x: { a: -0.75, b: 0.5, e: -0.5 },
+        y: { c: 0.2, d: 0.75, f: -0.15 },
+      },
+      {
+        limit: 0.98,
+        x: { a: -0.55, b: 0.25, e: 0 },
+        y: { c: 0.5, d: -0.1, f: 0.5 },
+      },
+      {
+        limit: Infinity,
+        x: { a: 1.5, b: 0.7, e: -1 },
+        y: { c: -0.5, d: 0.55, f: -0.25 },
+      },
+    ],
+  },
+
+  {
+    name: "ifs-fern-03-(bouquet-room)",
+    optimals: {
+      amplitude: 0.125,
+      fernScale: 1.75,
+      fernObjectSize: 1,
+      pointCount: 10000,
+    },
+    rules: [
+      {
+        limit: 0.4,
+        x: { a: 0.5, b: 0, e: 0.5 },
+        y: { c: 0, d: -0.4, f: 0.83 },
+      },
+      {
+        limit: 0.86,
+        x: { a: 0.15, b: -0.5, e: -0.05 },
+        y: { c: 0.7, d: -0.2, f: 0.95 },
+      },
+      {
+        limit: 0.93,
+        x: { a: 0.25, b: -0.99, e: 0 },
+        y: { c: 0.1, d: -0.75, f: 0.9 },
+      },
+      {
+        limit: Infinity,
+        x: { a: 0.5, b: -1.7, e: 0 },
+        y: { c: 0.2, d: -0.55, f: -0.25 },
+      },
+    ],
+  },
+
+  {
+    name: "ifs-fern-04-(bunny-chameleon)",
+    optimals: {
+      amplitude: 0.2,
+      fernScale: 0.05,
+      fernObjectSize: 1.125,
+      pointCount: 750,
+    },
+    rules: [
+      {
+        limit: 0.01,
+        x: { a: 0.1, b: 0.5, e: 1 },
+        y: { c: 0.07, d: 0.1, f: 0.2 },
+      },
+      {
+        limit: 0.86,
+        x: { a: 0.9, b: 0.9, e: 0 },
+        y: { c: -0.04, d: 0.85, f: 1.6 },
+      },
+      {
+        limit: 0.93,
+        x: { a: 0.2, b: -0.26, e: 0 },
+        y: { c: 0.23, d: 0.22, f: 1.6 },
+      },
+      {
+        limit: Infinity,
+        x: { a: -0.15, b: 0.28, e: 0 },
+        y: { c: 0.26, d: 0.24, f: 0.44 },
+      },
+    ],
+  },
+
+  {
+    name: "ifs-fern-05-(angel-moth)",
+    optimals: {
+      amplitude: 0.25,
+      fernScale: 1,
+      fernObjectSize: 0.75,
+      pointCount: 10000,
+    },
+    rules: [
+      {
+        limit: 0.1,
+        x: { a: 0, b: 0, e: 0 },
+        y: { c: 0, d: 0.5, f: 0.2 },
+      },
+      {
+        limit: 0.84,
+        x: { a: -0.85, b: 0.15, e: 0 },
+        y: { c: 0.15, d: 0.9, f: 0.15 },
+      },
+      {
+        limit: 0.93,
+        x: { a: -0.5, b: 0.5, e: -1.5 },
+        y: { c: 0.15, d: 0.15, f: 2.5 },
+      },
+      {
+        limit: Infinity,
+        x: { a: 0.25, b: -0.1, e: -0.5 },
+        y: { c: -1.5, d: -0.55, f: 0.25 },
+      },
+    ],
+  },
+
+  {
+    name: "ifs-fern-06-(crescent)",
+    optimals: {
+      amplitude: 0.25,
+      fernScale: 1,
+      fernObjectSize: 0.5,
+      pointCount: 5000,
+    },
+    rules: [
+      {
+        limit: 0.2,
+        x: { a: 0.2, b: -0.9, e: 0 },
+        y: { c: 0, d: 0.5, f: -0.72 },
+      },
+      {
+        limit: 0.84,
+        x: { a: 0.85, b: 0.5, e: 0 },
+        y: { c: -0.15, d: 0.9, f: 0.5 },
+      },
+      {
+        limit: 0.93,
+        x: { a: -0.5, b: 0.5, e: -1.5 },
+        y: { c: 0.15, d: 0.15, f: 2.75 },
+      },
+      {
+        limit: Infinity,
+        x: { a: 0.25, b: -0.1, e: -0.5 },
+        y: { c: -0.5, d: -0.155, f: 0.925 },
+      },
+    ],
+  },
+
+  {
+    name: "ifs-fern-07-(scorpion-sleeves)",
+    optimals: {
+      amplitude: 0.25,
+      fernScale: 2,
+      fernObjectSize: 0.2, // 0.8 with static mode 0.2 with grow mode
+      pointCount: 100000,
+    },
+    rules: [
+      {
+        limit: 0.3,
+        x: { a: 0, b: 0, e: 0 },
+        y: { c: 0, d: -0.1, f: -0.55 },
+      },
+      {
+        limit: 0.85,
+        x: { a: 0.845, b: 0.35, e: 0 },
+        y: { c: -0.35, d: 0.82, f: -1.6 },
+      },
+      {
+        limit: 0.93,
+        x: { a: 0.2, b: -0.31, e: 0 },
+        y: { c: 0.255, d: 0.245, f: 0.29 },
+      },
+      {
+        limit: Infinity,
+        x: { a: -0.15, b: 0.24, e: 0 },
+        y: { c: 0.25, d: 0.2, f: 0.68 },
+      },
+    ],
+  },
+
+  {
+    name: "kanga-ifs-08-(fishbones)",
+    optimals: {
+      amplitude: 0.25,
+      fernScale: 1,
+      fernObjectSize: 1,
+      pointCount: 10000,
+    },
+    rules: [
+      {
+        limit: 0.2,
+        x: { a: 0, b: 0, e: 0 },
+        y: { c: 0, d: -0.1, f: -0.55 },
+      },
+      {
+        limit: 0.85,
+        x: { a: 0.845, b: 0.035, e: 0 },
+        y: { c: -0.035, d: 0.82, f: -0.6 },
+      },
+      {
+        limit: 0.93,
+        x: { a: 0.2, b: -0.31, e: 0 },
+        y: { c: 0.255, d: 0.245, f: 0.29 },
+      },
+      {
+        limit: Infinity,
+        x: { a: -0.15, b: 0.24, e: 0 },
+        y: { c: 0.25, d: 0.2, f: 0.68 },
+      },
+    ],
+  },
+
+  {
+    name: "ifs-fern-09-(impossible-palm)",
+    optimals: {
+      amplitude: 0.25,
+      fernScale: 1,
+      fernObjectSize: 1,
+      pointCount: 1000,
+    },
+    rules: [
+      {
+        limit: 0.02,
+        x: { a: 0, b: 0, e: 0.5 },
+        y: { c: 0, d: 0, f: -0.14 },
+      },
+      {
+        limit: 0.84,
+        x: { a: 0.95, b: 0.05, e: 0 },
+        y: { c: -0.25, d: 0.75, f: -0.1 },
+      },
+      {
+        limit: 0.9,
+        x: { a: -0.5, b: -0.35, e: 1 },
+        y: { c: 0.3, d: -0.1, f: 0.2 },
+      },
+      {
+        limit: Infinity,
+        x: { a: 0.5, b: 0.3, e: -1 },
+        y: { c: 0.3, d: 0.25, f: 0.25 },
+      },
+    ],
+  },
+
+  {
+    name: "ifs-fern-10-(skull)",
+    optimals: {
+      amplitude: 0.25,
+      fernScale: 1,
+      fernObjectSize: 1,
+      pointCount: 10000,
+    },
+    rules: [
+      {
+        limit: 0.01,
+        x: { a: -0.49, b: 0.101, e: 0.9 },
+        y: { c: 0, d: 0, f: 0.9 },
+      },
+      {
+        limit: 0.86,
+        x: { a: 0.1, b: 0.45, e: 0.95 },
+        y: { c: 0.652, d: 0.279, f: 0.1 },
+      },
+      {
+        limit: 0.93,
+        x: { a: -0.41, b: 0.091, e: 0.15 },
+        y: { c: 0.85, d: 0.5, f: 0.049 },
+      },
+      {
+        limit: Infinity,
+        x: { a: -0.95, b: 0.02, e: 0.19 },
+        y: { c: 0.09, d: 0.19, f: 0.08 },
+      },
+    ],
+  },
+
+  {
+    name: "ifs-fern-11-(sans-soleil)",
+    optimals: {
+      amplitude: 0.25,
+      fernScale: 1,
+      fernObjectSize: 1,
+      pointCount: 10000,
+    },
+    rules: [
+      {
+        limit: 0.01,
+        x: { a: 0, b: 0, e: 0.9 },
+        y: { c: 0, d: 0.1, f: -0.955 },
+      },
+      {
+        limit: 0.85,
+        x: { a: 0.845, b: 0.5, e: 0 },
+        y: { c: -0.5, d: 0.82, f: 0.6 },
+      },
+      {
+        limit: 0.93,
+        x: { a: 0.2, b: 0.24, e: 0 },
+        y: { c: 0.9255, d: 0.245, f: 0.9 },
+      },
+      {
+        limit: Infinity,
+        x: { a: -0.915, b: 0.24, e: 0 },
+        y: { c: 0.25, d: 0.2, f: 0.68 },
+      },
+    ],
+  },
+
+  {
+    name: "ifs-fern-12-(icon)",
+    optimals: {
+      amplitude: 0.25,
+      fernScale: 1,
+      fernObjectSize: 1.25,
+      pointCount: 1000,
+    },
+    rules: [
+      {
+        limit: 0.4,
+        x: { a: 0, b: 0, e: 0.1 },
+        y: { c: 0, d: 0.75, f: -0.55 },
+      },
+      {
+        limit: 0.86,
+        x: { a: -0.6, b: -0.02, e: 0.52 },
+        y: { c: 0.09, d: 0.85, f: -0.052 },
+      },
+      {
+        limit: 0.93, //hair
+        x: { a: 0.195, b: 0.15, e: 0.525 }, //325
+        y: { c: 0.093, d: 0.05, f: 0.3 },
+      },
+      {
+        limit: Infinity,
+        x: { a: 0.195, b: 0.13, e: -0.25 }, //e -0/0
+        y: { c: 0.95, d: 0.155, f: -0.925 },
+      },
+    ],
+  },
+
+  {
+    name: "ifs-fern-13-(tower)",
+    optimals: {
+      amplitude: 0.25,
+      fernScale: 1,
+      fernObjectSize: 0.5,
+      pointCount: 1000,
+    },
+    rules: [
+      {
+        limit: 0.01,
+        x: { a: 0, b: 0, e: 0.1 },
+        y: { c: 0, d: 0, f: -0.55 },
+      },
+      {
+        limit: 0.86,
+        x: { a: 0.85, b: -0.02, e: -0.2 },
+        y: { c: 0.09, d: 0.85, f: -0.52 },
+      },
+      {
+        limit: 0.93,
+        x: { a: -0.5, b: 0.15, e: 0 },
+        y: { c: 0.3, d: -0.1, f: 0.92 },
+      },
+      {
+        limit: Infinity,
+        x: { a: -0.5, b: 0.3, e: -0.1 },
+        y: { c: 0.5, d: 0.55, f: -0.25 },
+      },
+    ],
+  },
+
+  {
+    name: "ifs-fern-14-(fossil-floral)",
+    optimals: {
+      amplitude: 0.25,
+      fernScale: 1,
+      fernObjectSize: 1,
+      pointCount: 1000,
+    },
+    rules: [
+      {
+        limit: 0.01,
+        x: { a: 0, b: 0, e: 0.9 },
+        y: { c: 0, d: 0.1, f: -0.955 },
+      },
+      {
+        limit: 0.85,
+        x: { a: 0.845, b: 0.5, e: 0 },
+        y: { c: -0.5, d: 0.82, f: 0.6 },
+      },
+      {
+        limit: 0.93,
+        x: { a: 0.2, b: -0.31, e: 0 },
+        y: { c: 0.255, d: 0.245, f: 0.29 },
+      },
+      {
+        limit: Infinity,
+        x: { a: -0.15, b: 0.24, e: 0 },
+        y: { c: 0.25, d: 0.2, f: 0.68 },
+      },
+    ],
+  },
+
+  {
+    name: "ifs-fern-15-(squared-spine)",
+    optimals: {
+      amplitude: 0.25,
+      fernScale: 1,
+      fernObjectSize: 0.5,
+      pointCount: 10000, //if trail fadeMode and static fernMode     pointCount: 1000,
+    },
+    rules: [
+      {
+        limit: 0.25,
+        x: { a: 0.95, b: 0, e: 0.9 },
+        y: { c: 0, d: 0.1, f: -0.955 },
+      },
+      {
+        limit: 0.85,
+        x: { a: 0.845, b: 0.5, e: 0 },
+        y: { c: -0.5, d: 0.82, f: 0.6 },
+      },
+      {
+        limit: 0.93,
+        x: { a: 0.2, b: -0.31, e: 0 },
+        y: { c: 0.9255, d: 0.245, f: 0.9 },
+      },
+      {
+        limit: Infinity,
+        x: { a: -0.915, b: 0.24, e: 0 },
+        y: { c: 0.25, d: 0.92, f: 0.8 },
+      },
+    ],
+  },
+
+  {
+    name: "ifs-fern-16-(strigine)",
+    optimals: {
+      amplitude: 0.25,
+      fernScale: 1,
+      fernObjectSize: 0.75,
+      pointCount: 7500,
+    },
+    rules: [
+      {
+        limit: 0.01,
+        x: { a: 0, b: 0, e: 0.9 },
+        y: { c: 0, d: 0.1, f: -0.955 },
+      },
+      {
+        limit: 0.85,
+        x: { a: 0.845, b: 0.5, e: 0 },
+        y: { c: -0.5, d: 0.82, f: 0.6 },
+      },
+      {
+        limit: 0.93,
+        x: { a: 0.2, b: -0.31, e: 0 },
+        y: { c: 0.9255, d: 0.245, f: 0.9 },
+      },
+      {
+        limit: Infinity,
+        x: { a: -0.915, b: 0.24, e: 0 },
+        y: { c: 0.25, d: 0.92, f: 0.8 },
+      },
+    ],
+  },
+
+  {
+    name: "ifs-fern-17-(mt-kili)",
+    optimals: {
+      amplitude: 0.25,
+      fernScale: 1,
+      fernObjectSize: 1,
+      pointCount: 1000,
+    },
+    rules: [
+      {
+        limit: 0.01,
+        x: { a: 0.5, b: 0, e: 0 },
+        y: { c: 0, d: 0.7, f: 0 },
+      },
+      {
+        limit: 0.2,
+        x: { a: 0.2, b: 0.1, e: 1 },
+        y: { c: 0.1, d: 0.2, f: 0 },
+      },
+      {
+        limit: 0.4,
+        x: { a: -0.4, b: 0.3, e: 0 },
+        y: { c: 0.2, d: 0.3, f: 1 },
+      },
+      {
+        limit: 0.7,
+        x: { a: 0.7, b: -0.1, e: -1 },
+        y: { c: -0.1, d: 0.7, f: 0 },
+      },
+      {
+        limit: Infinity,
+        x: { a: -0.2, b: 0.25, e: 0 },
+        y: { c: 0.15, d: -0.2, f: 0 },
+      },
+    ],
+  },
+];
+
 window.hydraKanga = async () => {
   await loadScript(
     "https://cdn.jsdelivr.net/gh/geikha/hyper-hydra@latest/hydra-text.js",
@@ -5,221 +609,12 @@ window.hydraKanga = async () => {
   await loadScript(
     "https://cdn.jsdelivr.net/gh/geikha/hydra-antlia@master/antlia-colors.js",
   ); //geikha's hydra colours library
-
-  window.kangaBorderPatternFractalIFS = [
-    (x, y, r) => [
-      r < 0.01
-        ? 1
-        : r < 0.86
-          ? 0.85 * x - 0.02 * y - 1
-          : r < 0.93
-            ? -0.5 * x + 0.15 * y
-            : -0.5 * x + 0.3 * y - 1,
-      r < 0.01
-        ? -0.55
-        : r < 0.86
-          ? 0.09 * x + 0.85 * y - 0.2
-          : r < 0.93
-            ? 0.3 * x - 0.1 * y - 0.2
-            : 0.5 * x + 0.55 * y - 0.25,
-    ],
-    (x, y, r) => [
-      //old 2
-      r < 0.01
-        ? 1
-        : r < 0.86
-          ? -0.75 * x + 0.5 * y - 0.5
-          : r < 0.93
-            ? -0.55 * x + 0.25 * y
-            : 1.5 * x + 0.7 * y - 1,
-      r < 0.01
-        ? -0.55
-        : r < 0.86
-          ? 0.2 * x + 0.75 * y - 0.15
-          : r < 0.93
-            ? 0.5 * x - 0.1 * y + 0.5
-            : -0.5 * x + 0.55 * y - 0.25,
-    ],
-    (x, y, r) => [
-      //new 3
-      r < 0.01
-        ? 0.5
-        : r < 0.86
-          ? 0.15 * x + -0.5 * y - 0.05
-          : r < 0.93
-            ? 0.25 * x + -0.99 * y
-            : 0.5 * x + -1.7 * y - 1,
-      r < 0.5
-        ? 0.83
-        : r < 0.45
-          ? 0.7 * x + -0.2 * y - -0.95
-          : r < 0.3
-            ? 0.1 * x - 0.75 * y + 0.9
-            : 0.2 * x + -0.55 * y - 0.25,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? 1
-        : r < 0.86
-          ? 0.85 * x - 0.02 * y - 1
-          : r < 0.93
-            ? -0.75 * x - 0.55 * y
-            : -0.15 * x + 0.05 * y + 2.5,
-      r < 0.01
-        ? -0.14
-        : r < 0.86
-          ? -0.2 * x + 0.85 * y - 0.5
-          : r < 0.93
-            ? 0.5 * x - 0.05 * y + 0.2
-            : 0.75 * x - 0.5 * y - 0.25,
-    ],
-    (x, y, r) => [
-      r < 0.02
-        ? 0
-        : r < 0.84
-          ? -0.85 * x + 0.5 * y
-          : r < 0.93
-            ? -0.5 * x + 0.5 * y - 1.5
-            : 0.25 * x - 0.1 * y - 0.5,
-      r < 0.02
-        ? 0.05 * y
-        : r < 0.84
-          ? -0.15 * x + 0.9 * y + 0.5
-          : r < 0.93
-            ? 0.15 * x + 0.15 * y + 2.5
-            : -1.5 * x - 0.55 * y + 0.25,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? 0
-        : r < 0.85
-          ? 0.845 * x + 0.035 * y
-          : r < 0.93
-            ? 0.2 * x - 0.31 * y
-            : -0.15 * x + 0.24 * y,
-      r < 0.01
-        ? -0.1 * y - 0.55
-        : r < 0.85
-          ? -0.035 * x + 0.82 * y + 1.6
-          : r < 0.93
-            ? 0.255 * x + 0.245 * y + 0.29
-            : 0.25 * x + 0.2 * y + 0.68,
-    ],
-    (x, y, r) => [
-      r < 0.02
-        ? 0.5
-        : r < 0.84
-          ? 0.95 * x + 0.05 * y
-          : r < 0.9
-            ? -0.5 * x - 0.35 * y + 1
-            : 0.5 * x + 0.3 * y - 1,
-      r < 0.02
-        ? -0.14
-        : r < 0.84
-          ? -0.25 * x + 0.75 * y - 0.1
-          : r < 0.9
-            ? 0.3 * x - 0.1 * y + 0.2
-            : 0.3 * x + 0.25 * y + 0.25,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? -0.49 * x + 0.101 * y + 0.9
-        : r < 0.86
-          ? 0.1 * x + 0.45 * y + 0.95
-          : r < 0.93
-            ? -0.41 * x + 0.091 * y + 0.15
-            : -0.95 * x + 0.02 * y + 0.19,
-      r < 0.01
-        ? 0.9
-        : r < 0.86
-          ? 0.652 * x + 0.279 * y + 0.1
-          : r < 0.93
-            ? 0.85 * x + 0.5 * y + 0.049
-            : 0.09 * x + 0.19 * y + 0.08,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? 0.9
-        : r < 0.85
-          ? 0.845 * x + 0.5 * y
-          : r < 0.93
-            ? 0.2 * x - 0.31 * y
-            : -0.915 * x + 0.24 * y,
-      r < 0.01
-        ? 0.1 * y - 0.955
-        : r < 0.85
-          ? -0.5 * x + 0.82 * y + 0.6
-          : r < 0.93
-            ? 0.9255 * x + 0.245 * y + 0.9
-            : 0.25 * x + 0.2 * y + 0.68,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? 0.1
-        : r < 0.86
-          ? 0.85 * x - 0.02 * y - 0.2
-          : r < 0.93
-            ? -0.5 * x + 0.15 * y
-            : -0.95 * x + 0.3 * y - 0.1,
-      r < 0.01
-        ? -0.55
-        : r < 0.86
-          ? 0.09 * x + 0.85 * y - 0.52
-          : r < 0.93
-            ? 0.3 * x - 0.1 * y + 0.092
-            : 0.5 * x + 0.55 * y - 0.925,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? 0.1
-        : r < 0.86
-          ? 0.85 * x - 0.02 * y - 0.2
-          : r < 0.93
-            ? -0.5 * x + 0.15 * y
-            : -0.5 * x + 0.3 * y - 0.1,
-      r < 0.01
-        ? -0.55
-        : r < 0.86
-          ? 0.09 * x + 0.85 * y - 0.52
-          : r < 0.93
-            ? 0.3 * x - 0.1 * y + 0.92
-            : 0.5 * x + 0.55 * y - 0.25,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? 0.9
-        : r < 0.85
-          ? 0.845 * x + 0.5 * y
-          : r < 0.93
-            ? 0.2 * x - 0.31 * y
-            : -0.15 * x + 0.24 * y,
-      r < 0.01
-        ? 0.1 * y - 0.955
-        : r < 0.85
-          ? -0.5 * x + 0.82 * y + 0.6
-          : r < 0.93
-            ? 0.255 * x + 0.245 * y + 0.29
-            : 0.25 * x + 0.2 * y + 0.68,
-    ],
-    (x, y, r) => [
-      r < 0.01
-        ? 0.9
-        : r < 0.85
-          ? 0.845 * x + 0.5 * y
-          : r < 0.93
-            ? 0.2 * x - 0.31 * y
-            : -0.915 * x + 0.24 * y,
-      r < 0.01
-        ? 0.1 * y - 0.955
-        : r < 0.85
-          ? -0.5 * x + 0.82 * y + 0.6
-          : r < 0.93
-            ? 0.9255 * x + 0.245 * y + 0.9
-            : 0.25 * x + 0.92 * y + 0.8,
-    ],
-  ];
+  console.log(`hydraKanga.js loaded`);
 
   //gold ground background
+  // window.goldGround = (col) => {
+  //   return shape(4, 1, 0).layer(noise(999, 1).invert().luma()).color_(col);
+  // };
   window.goldGround = (col) => {
     return shape(4, 1, 0).layer(noise(999, 1).invert().luma()).color_(col);
   };
@@ -229,6 +624,7 @@ window.hydraKanga = async () => {
     // buffer to draw border pattern onto
     borderPatternCnv = document.createElement("canvas"); //border pattern
     borderPattCtx = borderPatternCnv.getContext("2d");
+
     cnvPindo.width = width;
     cnvPindo.height = height;
     ctxB = cnvPindo.getContext("2d");
@@ -245,62 +641,477 @@ window.hydraKanga = async () => {
   initKangaBorder();
 
   setKangaBorderCol = (col) => {
-    // 'frame' for the border, a rectangle with no fill.
-    ctxB.strokeStyle = col;
-    ctxB.strokeRect(ctxBX, ctxBY, ctxBW, ctxBH);
-
-    // internal border pattern definition
-    // borderPattCtx.fillStyle = `${borderPattBgCol}` // effectively background colour for the border
-    borderPattCtx.fillStyle = col; // effectively background colour for the border
+    borderPattCtx.fillStyle = col;
     borderPattCtx.fillRect(0, 0, tileSize, tileSize);
-    // borderPatternY = 0;
     return src(s0);
   };
 
+  //Border Globals
   tileSize = cnvPindo.width / 12;
-  borderPatternCnv.width = tileSize;
-  borderPatternCnv.height = tileSize;
-  // borderPattCtx.fillRect(0, 0, tileSize, tileSize);
-  borderPatternY = 0;
+
+  borderBgTileCnv = document.createElement("canvas");
+  borderBgTileCtx = borderBgTileCnv.getContext("2d");
+
+  borderFernPatternCnv = document.createElement("canvas");
+  borderFernPattCtx = borderFernPatternCnv.getContext("2d");
+
+  borderBgTileCnv.width = tileSize;
+  borderBgTileCnv.height = tileSize;
+
+  borderFernPatternCnv.width = tileSize;
+  borderFernPatternCnv.height = tileSize;
+
+  borderBgTileX = 0;
+  borderBgTileY = 0;
+
+  //Separate scroll offset to the border bg
+  borderFernPatternX = 0;
+  borderFernPatternY = 0;
+
+  borderFramecountTrack = 0;
+
+  fernObjCnv = document.createElement("canvas");
+  fernObjCtx = fernObjCnv.getContext("2d");
+
+  currentFernCacheKey = "";
+
+  applyBorderIFSFern = (ruleSet, x, y, r = Math.random()) => {
+    for (const rule of ruleSet.rules) {
+      // console.log(ruleSet.optimals);
+
+      //Loop through and apply affine transform to limit greater than r etc...
+      if (r < rule.limit) {
+        return [
+          rule.x.a * x + rule.x.b * y + rule.x.e,
+          rule.y.c * x + rule.y.d * y + rule.y.f,
+        ];
+      }
+    }
+
+    const fallback = ruleSet.rules[ruleSet.rules.length - 1];
+
+    return [
+      fallback.x.a * x + fallback.x.b * y + fallback.x.e,
+      fallback.y.c * x + fallback.y.d * y + fallback.y.f,
+    ];
+  };
+
+  renderStaticFernObject = (
+    col = "white",
+    shapeIndex = 6,
+    fernScale = 0.7,
+    pointCount = 5000,
+  ) => {
+    const ifsIndex = selectFractalIFS(shapeIndex);
+
+    // console.log(ifsIndex);
+
+    //Cache values for the ferns to optimise points rendering
+    const cacheKey = `${col}-${ifsIndex}-${tileSize}-${fernScale}-${pointCount}`;
+
+    //Return if no change
+    if (currentFernCacheKey === cacheKey) {
+      return;
+    }
+
+    currentFernCacheKey = cacheKey;
+
+    const objectSize = tileSize;
+    fernObjCnv.width = objectSize;
+    fernObjCnv.height = objectSize;
+
+    fernObjCtx.save();
+    fernObjCtx.globalAlpha = 1;
+    fernObjCtx.globalCompositeOperation = "source-over"; //default blend mode //read mdn docs on other operations: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
+    fernObjCtx.clearRect(0, 0, fernObjCnv.width, fernObjCnv.height);
+    fernObjCtx.fillStyle = col;
+
+    const ruleSet = kangaBorderPatternFractalIFS[ifsIndex];
+
+    let cX = 0;
+    let cY = 0;
+
+    const fernPoint = Math.max(0.5, tileSize * 0.012);
+
+    //Smaller = larger fern / Larger = smaller fern
+    const coordinateScale = 4 / fernScale; //4 default
+
+    for (let i = 0; i < pointCount; i++) {
+      [cX, cY] = applyBorderIFSFern(ruleSet, cX, cY);
+
+      const px = objectSize * (0.5 + cX / coordinateScale);
+      const py = objectSize * (0.5 - cY / coordinateScale);
+
+      fernObjCtx.fillRect(px, py, fernPoint, fernPoint);
+    }
+
+    fernObjCtx.restore();
+  };
 
   selectFractalIFS = (shapeIndex = 6) => {
     if (shapeIndex === "r") {
       return Math.floor(Math.random() * kangaBorderPatternFractalIFS.length);
     }
+
+    // console.log(ruleSet.optimals);
+    // console.log(shapeIndex.name);
+
     return Math.max(
       0,
       Math.min(kangaBorderPatternFractalIFS.length - 1, shapeIndex - 1),
     );
   };
 
-  drawKangaBorderPattern = (col, shapeIndex = 6) => {
-    const ifs = kangaBorderPatternFractalIFS[selectFractalIFS(shapeIndex)];
-    ctxB.clearRect(0, 0, cnvPindo.width, cnvPindo.height);
-    // borderPattCtx.clearRect(0, 0, tileSize, tileSize);
+  getBorderScrollStep = (dir = "up") => {
+    if (dir === "r") {
+      dir = [
+        "up",
+        "down",
+        "left",
+        "right",
+        "upLeft",
+        "upRight",
+        "downLeft",
+        "downRight",
+      ][Math.floor(Math.random() * 8)];
+    }
 
-    //barnsley fern fractal shape generator
-    // borderPattCtx.fillStyle = `${borderPattFillCol}`
+    const directions = {
+      up: [0, -1],
+      down: [0, 1],
+      left: [-1, 0],
+      right: [1, 0],
+      upLeft: [-1, -1],
+      upRight: [1, -1],
+      downLeft: [-1, 1],
+      downRight: [1, 1],
+      none: [0, 0],
+    };
 
-    borderPattCtx.fillStyle = col;
-    let cX = 0,
-      cY = 0;
-    const fernPoint = Math.max(0.5, tileSize * 0.01);
-    for (let i = 0; i < 10; i++) {
-      [cX, cY] = ifs(cX, cY, Math.random(1));
-      borderPattCtx.fillRect(
-        tileSize * (0.5 + cX / 4),
-        tileSize * (0.5 - cY / 4),
-        fernPoint,
-        fernPoint,
+    return directions[dir] || directions.up;
+  };
+
+  getOppositeBorderDir = (dir = "up") => {
+    const opposites = {
+      up: "down",
+      down: "up",
+      left: "right",
+      right: "left",
+      upLeft: "downRight",
+      upRight: "downLeft",
+      downLeft: "upRight",
+      downRight: "upLeft",
+      none: "none",
+    };
+
+    return opposites[dir] || "down";
+  };
+
+  drawBorderBackgroundTile = ({
+    bgMode = "solid",
+    bgColA = "black",
+    bgColB = "rgb(128, 128, 128)",
+    debugTile = false,
+    debugTileCol = "rgba(255, 0, 0, 1)",
+  } = {}) => {
+    borderBgTileCtx.save();
+    borderBgTileCtx.globalAlpha = 1;
+    borderBgTileCtx.globalCompositeOperation = "source-over";
+    borderBgTileCtx.clearRect(0, 0, tileSize, tileSize);
+
+    if (bgMode === "transparent") {
+      // Leaves tile clear.
+    }
+
+    if (bgMode === "solid") {
+      borderBgTileCtx.fillStyle = bgColA;
+      borderBgTileCtx.fillRect(0, 0, tileSize, tileSize);
+    }
+
+    if (bgMode === "checker") {
+      const halfTile = tileSize * 0.5;
+
+      borderBgTileCtx.fillStyle = bgColA;
+      borderBgTileCtx.fillRect(0, 0, halfTile, halfTile);
+      borderBgTileCtx.fillRect(halfTile, halfTile, halfTile, halfTile);
+
+      borderBgTileCtx.fillStyle = bgColB;
+      borderBgTileCtx.fillRect(halfTile, 0, halfTile, halfTile);
+      borderBgTileCtx.fillRect(0, halfTile, halfTile, halfTile);
+    }
+
+    if (bgMode === "stripeX") {
+      borderBgTileCtx.fillStyle = bgColA;
+      borderBgTileCtx.fillRect(0, 0, tileSize, tileSize);
+
+      borderBgTileCtx.fillStyle = bgColB;
+      borderBgTileCtx.fillRect(0, 0, tileSize, tileSize * 0.5);
+    }
+
+    if (bgMode === "stripeY") {
+      borderBgTileCtx.fillStyle = bgColA;
+      borderBgTileCtx.fillRect(0, 0, tileSize, tileSize);
+
+      borderBgTileCtx.fillStyle = bgColB;
+      borderBgTileCtx.fillRect(0, 0, tileSize * 0.5, tileSize);
+    }
+
+    if (debugTile) {
+      borderBgTileCtx.strokeStyle = debugTileCol;
+      borderBgTileCtx.lineWidth = 1;
+      borderBgTileCtx.strokeRect(0.5, 0.5, tileSize - 1, tileSize - 1);
+    }
+
+    borderBgTileCtx.restore();
+  };
+
+  drawGrowingFernObject = ({
+    ctx,
+    col = "white",
+    shapeIndex = 6,
+    fernScale = 1,
+    pointCount = 1000,
+    x = 0,
+    y = 0,
+    w = tileSize,
+    h = tileSize,
+  } = {}) => {
+    const ifsIndex = selectFractalIFS(shapeIndex);
+
+    const ruleSet = kangaBorderPatternFractalIFS[ifsIndex];
+
+    let cX = 0;
+    let cY = 0;
+
+    const fernPoint = Math.max(0.5, tileSize * 0.012);
+    const coordinateScale = 4 / fernScale;
+
+    ctx.save();
+    ctx.fillStyle = col;
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+
+    for (let i = 0; i < pointCount; i++) {
+      [cX, cY] = applyBorderIFSFern(ruleSet, cX, cY);
+
+      const px = x + w * (0.5 + cX / coordinateScale);
+      const py = y + h * (0.5 - cY / coordinateScale);
+
+      ctx.fillRect(px, py, fernPoint, fernPoint);
+    }
+
+    ctx.restore();
+  };
+
+  //Workhorse fern pattern tile renderer function
+  drawBorderFernTile = ({
+    col = "white",
+    shapeIndex = 6,
+    fernScale = 1,
+    fernObjectSize = 0.7,
+    pointCount = 10000,
+    amplitude = 0.18,
+    speed = 1,
+    dir = "up",
+    motion = "linear",
+    fadeMode = "clear",
+    trailAlpha = 0.075,
+    trailCol = "rgba(0, 0, 0, 1)",
+    fernMode = "static",
+    growingPointCount = 500,
+  } = {}) => {
+    let wobbleX = 0;
+    let wobbleY = 0;
+
+    const wave = Math.sin(time * speed * 1.5) * tileSize * amplitude;
+
+    if (motion === "sine" || motion === "scrollSine") {
+      if (dir === "left" || dir === "right") {
+        wobbleX = wave;
+        wobbleY = wave * 2;
+      }
+
+      if (dir === "up" || dir === "down") {
+        wobbleX = wave * 2;
+
+        wobbleY = wave;
+      }
+
+      if (
+        dir === "up-left" ||
+        dir === "down-left" ||
+        dir === "up-right" ||
+        dir === "down-right"
+      ) {
+        const [dirX, dirY] = getBorderScrollStep(dir);
+        wobbleX = wave * dirX;
+        wobbleY = wave * dirY;
+      }
+    }
+
+    if (motion === "circle") {
+      wobbleX = Math.cos(time * speed) * tileSize * amplitude;
+      wobbleY = Math.sin(time * speed) * tileSize * amplitude;
+    }
+
+    if (motion === "orbit") {
+      wobbleX = Math.cos(time * speed) * tileSize * amplitude;
+      wobbleY = Math.sin(time * speed * 1.618) * tileSize * amplitude;
+    }
+
+    borderFernPattCtx.save();
+
+    if (fadeMode === "clear") {
+      borderFernPattCtx.globalAlpha = 1;
+      borderFernPattCtx.globalCompositeOperation = "source-over";
+      borderFernPattCtx.clearRect(0, 0, tileSize, tileSize);
+    }
+
+    if (fadeMode === "trail") {
+      borderFernPattCtx.globalAlpha = trailAlpha;
+      borderFernPattCtx.globalCompositeOperation = "destination-out";
+
+      borderFernPattCtx.fillStyle = trailCol;
+      borderFernPattCtx.fillRect(0, 0, tileSize, tileSize);
+    }
+
+    const drawSize = tileSize * fernObjectSize;
+    const baseX = (tileSize - drawSize) * 0.5;
+    const baseY = (tileSize - drawSize) * 0.5;
+
+    borderFernPattCtx.globalAlpha = 1;
+    borderFernPattCtx.globalCompositeOperation = "source-over";
+
+    if (fernMode === "static") {
+      renderStaticFernObject(col, shapeIndex, fernScale, pointCount);
+
+      borderFernPattCtx.drawImage(
+        fernObjCnv,
+        baseX + wobbleX,
+        baseY + wobbleY,
+        drawSize,
+        drawSize,
       );
     }
-    //pattern animation config
-    animatedPattern = ctxB.createPattern(borderPatternCnv, "repeat");
-    animatedPattern.setTransform(new DOMMatrix().translate(0, borderPatternY));
-    ctxB.strokeStyle = animatedPattern;
+
+    if (fernMode === "grow") {
+      drawGrowingFernObject({
+        ctx: borderFernPattCtx,
+        col,
+        shapeIndex,
+        fernScale,
+        pointCount: growingPointCount,
+        x: baseX + wobbleX,
+        y: baseY + wobbleY,
+        w: drawSize,
+        h: drawSize,
+      });
+    }
+
+    borderFernPattCtx.restore();
+  };
+
+  drawKangaBorderPattern = (
+    col = "white",
+    shapeIndex = 6,
+    dir = "up",
+    speed = 1,
+    motion = "linear",
+    opts = {},
+  ) => {
+    const {
+      bgMode = "solid",
+      bgCol = "black",
+      bgColA = bgCol,
+      bgColB = "rgb(128, 128, 128)",
+      bgDir = "opposite",
+      bgSpeed = speed,
+      bgTileScroll = true,
+
+      fernScale = 1.0,
+      fernObjectSize = 0.7,
+      amplitude = 0.18,
+
+      debugTile = false,
+      debugTileCol = "rgba(255, 0, 0, 1)",
+
+      scrollFernPattern = true,
+      fadeMode = "clear",
+      trailAlpha = 0.075,
+
+      pointCount = 10000,
+      fernMode = "static",
+      growingPointCount = 500,
+    } = opts;
+
+    borderFramecountTrack++;
+
+    const resolvedBgDir =
+      bgDir === "opposite" ? getOppositeBorderDir(dir) : bgDir;
+
+    const [fernDx, fernDy] = getBorderScrollStep(dir);
+    const [bgDx, bgDy] = getBorderScrollStep(resolvedBgDir);
+
+    drawBorderBackgroundTile({
+      bgMode,
+      bgColA,
+      bgColB,
+      debugTile,
+      debugTileCol,
+    });
+
+    drawBorderFernTile({
+      col,
+      shapeIndex,
+      fernScale,
+      fernObjectSize,
+      pointCount,
+      amplitude,
+      speed,
+      dir,
+      motion,
+      fadeMode,
+      trailAlpha,
+      trailCol: bgColA,
+      fernMode,
+      growingPointCount,
+    });
+
+    if (
+      scrollFernPattern &&
+      (motion === "linear" ||
+        motion === "scrollSine" ||
+        motion === "orbit" ||
+        motion === "circle")
+    ) {
+      borderFernPatternX =
+        (borderFernPatternX + fernDx * speed + tileSize) % tileSize;
+      borderFernPatternY =
+        (borderFernPatternY + fernDy * speed + tileSize) % tileSize;
+    }
+
+    if (bgTileScroll) {
+      borderBgTileX = (borderBgTileX + bgDx * bgSpeed + tileSize) % tileSize;
+      borderBgTileY = (borderBgTileY + bgDy * bgSpeed + tileSize) % tileSize;
+    }
+
+    const bgBorder = ctxB.createPattern(borderBgTileCnv, "repeat");
+    bgBorder.setTransform(
+      new DOMMatrix().translate(borderBgTileX, borderBgTileY),
+    );
+
+    ctxB.strokeStyle = bgBorder;
     ctxB.lineWidth = ctxBLW;
     ctxB.strokeRect(ctxBX, ctxBY, ctxBW, ctxBH);
-    borderPatternY = (borderPatternY - 1 + tileSize) % tileSize;
+
+    const fernPattern = ctxB.createPattern(borderFernPatternCnv, "repeat");
+    fernPattern.setTransform(
+      new DOMMatrix().translate(borderFernPatternX, borderFernPatternY),
+    );
+
+    ctxB.strokeStyle = fernPattern;
+    ctxB.lineWidth = ctxBLW;
+    ctxB.strokeRect(ctxBX, ctxBY, ctxBW, ctxBH);
   };
 
   // initKangaCentral(col)
@@ -400,10 +1211,25 @@ window.hydraKanga = async () => {
     return srcRelMask(txt).scroll(0, 0.775);
   };
 
-  window.liveBorder = (col = "white") => {
-    setKangaBorderCol(col);
+  window.liveBorder = () => {
     return src(s0);
   };
+
+  window.resetKangaBorderMotion = () => {
+    borderFernPatternX = 0;
+    borderFernPatternY = 0;
+    borderBgPatternX = 0;
+    borderBgPatternY = 0;
+  };
+
+  window.clearFernTrail = () => {
+    borderFernPattCtx.clearRect(0, 0, tileSize, tileSize);
+  };
+
+  window.drawLiveBorder = () => {
+    ctxB.clearRect(0, 0, cnvPindo.width, cnvPindo.height);
+  };
+
   window.kangaCentralPanel = (col = "navy") => {
     ctxC.fillStyle = col;
     ctxC.fillRect(ctxCX, ctxCY, ctxCW, ctxCH);
@@ -423,46 +1249,4 @@ window.hydraKanga = async () => {
     );
     return src(s2);
   };
-
-  //gold ground background
-  // goldGround(beige)
-  // osc(5)
-  // .layer(
-  // voronoi(1).color_(white).mask(src(s0).modulate(voronoi(1)))
-  //border
-  //   src(s0).modulatePixelate(noise(5),100,100)
-  // setKangaBorderCol("white")
-  //drawBorderPattern(col)
-  // initBorderBg("lavender")
-  // .modulate(voronoi(1)) //.modulate(osc(50)))
-
-  //central motif
-  // layer(
-  //   src(s1)
-  //     //          .mask(osc([10,999,20,.1,99],.1).colorama(.001).layer(src(s0).sub(shape(4).modulatePixelate(voronoi(1,5),2,5).modulateScale(noise(.1),[99,.75]))))
-  //     .layer(
-  //       osc(50)
-  //         .modulate(src(s0))
-  //         .add(src(s1).sub(noise(5).color_(white))),
-  //     ),
-  // )
-  //   //         ).layer(solid(1,1,1).add(src(s1).sub(noise(5).color_(white))))
-  //   //.modulate(osc(5)))
-  //   //Text Border
-  //   //   .layer(src(s2).mult(voronoi(10).modulate(src(s0))))
-  //   .layer(src(s2).mult(voronoi(10).modulate(src(s0))))
-  //   //text
-  //   .layer(
-  //     src(s3)
-  //       //            .layer(kangaTxtStrokeFill("JUST JUSt just").scroll(0,-.09)
-  //       //            .layer(kangaTxtStrokeFill("The quick brown fox jumped over the lazy sheep dog").scroll(0,-.09)
-  //       .modulateScrollX(osc([2, -5, 1]), [-0.5, 0.1, 0.5, -1])
-  //       .modulate(src(s0)),
-  //   )
-  //   // ,
-  //   //.modulate(noise(1)))
-  //   // )
-  //   // )
-  //   .out();
-  //.modulateHue(osc().kaleid(0))
 };
