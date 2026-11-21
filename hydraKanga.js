@@ -249,8 +249,14 @@ window.kangaBorderPatternFractalIFS = [
     optimals: {
       amplitude: 0.25,
       fernScale: 2,
-      fernObjectSize: 0.2, // 0.8 with static mode 0.2 with grow mode
       pointCount: 100000,
+      static: {
+        fernObjectSize: 0.8, // 0.8 with static mode 0.2 with grow mode
+      },
+      grow: {
+        fernObjectSize: 0.2,
+        growingPointCount: 1000,
+      },
     },
     rules: [
       {
@@ -506,7 +512,13 @@ window.kangaBorderPatternFractalIFS = [
       amplitude: 0.25,
       fernScale: 1,
       fernObjectSize: 0.5,
-      pointCount: 10000, //if trail fadeMode and static fernMode     pointCount: 1000,
+      static: {
+        pointCount: 10000, //if trail fadeMode and static fernMode     pointCount: 1000,
+      },
+      grow: {
+        pointCount: 1000,
+        growingPointCount: 1000,
+      },
     },
     rules: [
       {
@@ -609,7 +621,7 @@ window.hydraKanga = async () => {
   await loadScript(
     "https://cdn.jsdelivr.net/gh/geikha/hydra-antlia@master/antlia-colors.js",
   ); //geikha's hydra colours library
-  console.log(`hydraKanga.js loaded`);
+  console.log(`hydraKanga.js is loaded 🚪`);
 
   //gold ground background
   // window.goldGround = (col) => {
@@ -760,6 +772,10 @@ window.hydraKanga = async () => {
       0,
       Math.min(kangaBorderPatternFractalIFS.length - 1, shapeIndex - 1),
     );
+  };
+
+  getFractalIFS = (shapeIndex = 6) => {
+    return kangaBorderPatternFractalIFS[selectFractalIFS(shapeIndex)];
   };
 
   getBorderScrollStep = (dir = "up") => {
@@ -1011,6 +1027,10 @@ window.hydraKanga = async () => {
     borderFernPattCtx.restore();
   };
 
+  window.getKangaIFSOptimals = (shapeIndex = 6) => {
+    return getFractalIFS(shapeIndex).optimals;
+  };
+
   drawKangaBorderPattern = (
     col = "white",
     shapeIndex = 6,
@@ -1019,6 +1039,22 @@ window.hydraKanga = async () => {
     motion = "linear",
     opts = {},
   ) => {
+    const requestedFernMode = opts.fernMode || "static";
+
+    const ruleSet = getFractalIFS(shapeIndex);
+
+    const mergedOpts = {
+      amplitude: 0.18,
+      fernScale: 1,
+      fernObjectSize: 0.7,
+      trailAlpha: 0.075,
+      pointCount: 10000,
+      growingPointCount: 500,
+      ...ruleSet.optimals,
+      ...ruleSet.optimals?.[requestedFernMode],
+      ...opts,
+    };
+
     const {
       bgMode = "solid",
       bgCol = "black",
@@ -1042,7 +1078,7 @@ window.hydraKanga = async () => {
       pointCount = 10000,
       fernMode = "static",
       growingPointCount = 500,
-    } = opts;
+    } = mergedOpts;
 
     borderFramecountTrack++;
 
